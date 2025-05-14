@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita - Clínica Médica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        }
+        form input, form select, form textarea, form button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .message {
+            color: green;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Agendar Cita</h2>
+    <form id="appointmentForm">
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="tel" name="telefono" placeholder="Teléfono" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <select name="sexo">
+            <option>Femenino</option>
+            <option>Masculino</option>
+            <option>Otro</option>
+        </select>
+        <select name="especialidad">
+            <option>Medicina General</option>
+            <option>Ginecología</option>
+            <option>Urología</option>
+            <option>Pediatría</option>
+            <option>Cardiología</option>
+        </select>
+        <input type="date" name="fecha" required>
+        <input type="time" name="hora" required>
+        <textarea name="comentarios" placeholder="Comentarios"></textarea>
+        <button type="submit">Agendar Cita</button>
+    </form>
+    <div class="message">✅ Gracias, tu cita ha sido agendada.<br> ⏳ Redirigiendo al inicio...<br> 🎉 Te contactaremos pronto.</div>
+</div>
+
+<script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let formData = new FormData(event.target);
+        fetch("https://script.google.com/macros/s/AKfycbwxMFfrtVzn89G3ph_ZCPizdvfqPLnfHGAntmPT88m8S0jUCwDKuUXJG77oWSaMqEK7oQ/exec", {
+            method: "POST",
+            body: formData
+        }).then(() => {
+            document.querySelector(".message").style.display = "block";
+            setTimeout(() => {
+                document.querySelector(".message").style.display = "none";
+                event.target.reset();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }, 5000);
+        });
+    });
+</script>
+
+</body>
+</html>
